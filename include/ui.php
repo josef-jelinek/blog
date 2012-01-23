@@ -77,10 +77,12 @@ function checkBot() {
   return false;
 }
 
+function unslash($text) {
+  return get_magic_quotes_gpc() ? stripslashes($text) : $text;
+}
+
 function clean($text) {
-  if (get_magic_quotes_gpc())
-    $text = stripslashes($text);
-  return htmlspecialchars(trim($text), ENT_QUOTES);
+  return htmlspecialchars(trim(unslash($text)), ENT_QUOTES);
 }
 
 function content($text) {

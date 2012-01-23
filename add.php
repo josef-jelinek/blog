@@ -5,7 +5,7 @@ require 'header.php';
 if (isGET('post') && isAdmin()) {
   if (checkBot() && check('title') && check('content')) {
     $postEntry['title'] = clean($_POST['title']);
-    $postEntry['content'] = clean($_POST['content']);
+    $postEntry['content'] = $_POST['content'];
     $postEntry['comments'] = array();
     $postEntry['tags'] = array();
     $postEntry['locked'] = false;

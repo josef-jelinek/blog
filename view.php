@@ -9,7 +9,7 @@ if (isGET('post') && isValidEntry('posts', $_GET['post'])) {
   $out['content'] .= '<div class="post">
   <h1 class="title">' . $out['title'] . managePost($_GET['post']) . '</h1>
   <div class="date">' . toDate($_GET['post']) . '</div>';
-  $out['content'] .= '<div class="content">' . $postEntry['content'] . '</div>';
+  $out['content'] .= '<div class="content">' . unslash($postEntry['content']) . '</div>';
   $out['content'] .= '<div class="info">';
   foreach ($postEntry['tags'] as $tag) {
     $tagEntry = readEntry('tags', $tag);

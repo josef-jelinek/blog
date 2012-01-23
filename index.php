@@ -56,7 +56,7 @@ if (isGET('comments')) {
         $out['content'] .= '<a href="/view.php/tag/' . $tag . '">' . $tagName . '</a>';
       }
       $out['content'] .= '</div>
-      <div class="content">' . $postEntry['content'] . '</div>';
+      <div class="content">' . unslash($postEntry['content']) . '</div>';
       $commentCount = $postEntry['comments'] ? count($postEntry['comments']) : 0;
       $out['content'] .= $commentCount > 0 ? '<div class="ccount"><a href="/view.php/post/' . $post . '#comments">' . $commentCount . ($commentCount > 1 ? $lang['ncomments'] : $lang['ncomment']) . '</a></div>' : '';
       $out['content'] .= '</div>';
