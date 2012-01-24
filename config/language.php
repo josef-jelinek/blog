@@ -1,6 +1,7 @@
 <?php
 if (!isset($out)) exit;
 $lang = array(
+  'home' => 'Home',
   'post' => 'Post',
   'posts' => 'Posts',
   'newPost' => 'New Post',
@@ -43,6 +44,7 @@ $lang = array(
   'yes' => 'Yes',
   'no' => 'No',
   'locked' => 'Locked',
+  'published' => 'Published',
   'day' => 'day',
   'hour' => 'hour',
   'minute' => 'minute',

@@ -9,6 +9,7 @@ if (isGET('post') && isAdmin()) {
     $postEntry['comments'] = array();
     $postEntry['tags'] = array();
     $postEntry['locked'] = false;
+    $postEntry['published'] = false;
     $post = newEntry();
     saveEntry('posts', $post, $postEntry);
     redirect('view.php/post/' . $post);

@@ -2,7 +2,41 @@
 $out['self'] = 'index';
 require 'header.php';
 
-if (isGET('comments')) {
+if (isGET('posts')) {
+  $out['title'] = $lang['posts'];
+  $out['titleHtml'] = '';
+  $out['content'] .= '';
+  $posts = listEntry('posts');
+  sort($posts);
+  $pages = pages($posts);
+  $page = page($pages);
+  if ($posts) {
+    $isAdmin = isAdmin();
+    $first = true;
+    foreach (pageItems($posts, $page) as $post) {
+      $postEntry = readEntry('posts', $post);
+      if ($isAdmin || $postEntry['published']) {
+        $out['content'] .= $first ? '' : '<div class="div">&middot; &middot; &middot; &middot; &middot;</div>';
+        $first = false;
+        $out['content'] .= '<div class="post">
+        <h2><a href="/view.php/post/' . $post . '">' . $postEntry['title'] . managePost($post) . '</a></h2>
+        <div class="date">' . toDate($post) . '</div>';
+        $out['content'] .= '<div class="info">';
+        foreach ($postEntry['tags'] as $tag) {
+          $tagEntry = readEntry('tags', $tag);
+          $tagName = $tagEntry['name'];
+          $out['content'] .= '<a href="/view.php/tag/' . $tag . '">' . $tagName . '</a>';
+        }
+        $out['content'] .= '</div>
+        <div class="content">' . unslash($postEntry['content']) . '</div>';
+        $commentCount = $postEntry['comments'] ? count($postEntry['comments']) : 0;
+        $out['content'] .= $commentCount > 0 ? '<div class="ccount"><a href="/view.php/post/' . $post . '#comments">' . $commentCount . ($commentCount > 1 ? $lang['ncomments'] : $lang['ncomment']) . '</a></div>' : '';
+        $out['content'] .= '</div>';
+      }
+    }
+  }
+  $out['content'] .= paging($page, $pages, '/index.php/posts/all');
+} else if (isGET('comments')) {
   $out['title'] = $lang['comments'];
   $out['content'] .= '';
   $comments = listEntry('comments');
@@ -28,7 +62,7 @@ if (isGET('comments')) {
     }
     $out['content'] .= '</div>';
   }
-  $out['content'] .= paging($page, $pages, '/index.php/comments/o');
+  $out['content'] .= paging($page, $pages, '/index.php/comments/all');
 } else if (isGET('404')) {
   $out['title'] = 'HTTP 404';
   $out['content'] .= '<p>' . $lang['notFound'] . '</p>';
@@ -41,28 +75,31 @@ if (isGET('comments')) {
   $pages = pages($posts);
   $page = page($pages);
   if ($posts) {
+    $isAdmin = isAdmin();
     $first = true;
     foreach (pageItems($posts, $page) as $post) {
-      $out['content'] .= $first ? '' : '<div class="div">&middot; &middot; &middot; &middot; &middot;</div>';
-      $first = false;
       $postEntry = readEntry('posts', $post);
-      $out['content'] .= '<div class="post">
-      <h2><a href="/view.php/post/' . $post . '">' . $postEntry['title'] . managePost($post) . '</a></h2>
-      <div class="date">' . toDate($post) . '</div>';
-      $out['content'] .= '<div class="info">';
-      foreach ($postEntry['tags'] as $tag) {
-        $tagEntry = readEntry('tags', $tag);
-        $tagName = $tagEntry['name'];
-        $out['content'] .= '<a href="/view.php/tag/' . $tag . '">' . $tagName . '</a>';
+      if ($isAdmin || $postEntry['published']) {
+        $out['content'] .= $first ? '' : '<div class="div">&middot; &middot; &middot; &middot; &middot;</div>';
+        $first = false;
+        $out['content'] .= '<div class="post">
+        <h2><a href="/view.php/post/' . $post . '">' . $postEntry['title'] . managePost($post) . '</a></h2>
+        <div class="date">' . toDate($post) . '</div>';
+        $out['content'] .= '<div class="info">';
+        foreach ($postEntry['tags'] as $tag) {
+          $tagEntry = readEntry('tags', $tag);
+          $tagName = $tagEntry['name'];
+          $out['content'] .= '<a href="/view.php/tag/' . $tag . '">' . $tagName . '</a>';
+        }
+        $out['content'] .= '</div>
+        <div class="content">' . unslash($postEntry['content']) . '</div>';
+        $commentCount = $postEntry['comments'] ? count($postEntry['comments']) : 0;
+        $out['content'] .= $commentCount > 0 ? '<div class="ccount"><a href="/view.php/post/' . $post . '#comments">' . $commentCount . ($commentCount > 1 ? $lang['ncomments'] : $lang['ncomment']) . '</a></div>' : '';
+        $out['content'] .= '</div>';
       }
-      $out['content'] .= '</div>
-      <div class="content">' . unslash($postEntry['content']) . '</div>';
-      $commentCount = $postEntry['comments'] ? count($postEntry['comments']) : 0;
-      $out['content'] .= $commentCount > 0 ? '<div class="ccount"><a href="/view.php/post/' . $post . '#comments">' . $commentCount . ($commentCount > 1 ? $lang['ncomments'] : $lang['ncomment']) . '</a></div>' : '';
-      $out['content'] .= '</div>';
     }
   }
-  $out['content'] .= paging($page, $pages, '/index.php/posts/all');
+  $out['content'] .= paging($page, $pages, '/index.php');
 }
 
 require 'templates/page.php';

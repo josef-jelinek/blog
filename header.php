@@ -13,7 +13,7 @@ if (!isset($_SESSION['role']))
   $_SESSION['role'] = '';
 
 function home() {
-  redirect('index.php/posts');
+  redirect('index.php');
 }
 
 $_GET = urlPath();

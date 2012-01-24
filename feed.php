@@ -9,7 +9,7 @@ function getFeedEntry($title, $url, $date, $content) {
     <link href="' . $url . '"/>
     <id>' . $url . '</id>
     <updated>' . $date . '</updated>
-    <summary type="html">' . htmlspecialchars($content, ENT_QUOTES) . '</summary>
+    <summary type="html">' . htmlspecialchars($content, ENT_NOQUOTES) . '</summary>
   </entry>';
 }
 
@@ -23,7 +23,7 @@ if (isGET('comments')) {
     foreach ($items as $item) {
       $itemData = readEntry('comments', $item);
       $parentData = readEntry('posts', $itemData['post']);
-      $title = $itemData['commenter'] . $lang['commented'] . $parentData['title'];
+      $title = clean($itemData['commenter'] . $lang['commented'] . $parentData['title']);
       $url = $out['baseURL'] . 'view.php/post/' . $itemData['post'] . '/pages/' . pageOf($item, $parentData['comments']) . '#' . $item;
       $out['content'] .= getFeedEntry($title, $url, toDate($item, 'c'), content($itemData['content']));
     }
@@ -37,9 +37,11 @@ if (isGET('comments')) {
   if ($items) {
     foreach ($items as $item) {
       $itemData = readEntry('posts', $item);
-      $title = $itemData['title'];
-      $url = $out['baseURL'] . 'view.php/post/' . $item;
-      $out['content'] .= getFeedEntry($title, $url, toDate($item, 'c'), $itemData['content']);
+      if ($itemData['published']) {
+        $title = clean($itemData['title']);
+        $url = $out['baseURL'] . 'view.php/post/' . $item;
+        $out['content'] .= getFeedEntry($title, $url, toDate($item, 'c'), unslash($itemData['content']));
+      }
     }
   }
 }

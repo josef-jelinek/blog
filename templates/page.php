@@ -15,6 +15,7 @@ header('Content-Type: text/html; charset=UTF-8');
   <div id="header"><?php echo $config['title'];?></div>
   <div id="menu">
     <div class="nav">
+      <a href="/index.php"><?php echo $lang['home'];?></a>
       <a href="/index.php/posts"><?php echo $lang['posts'];?></a>
       <a href="/index.php/comments"><?php echo $lang['comments'];?></a>
       <?php if (isAdmin()) echo '<a href="/add.php/post">' . $lang['newPost'] . '</a>';?>
