@@ -42,7 +42,7 @@ if (isGET('post') && isValidEntry('posts', $_GET['post'])) {
     $out['content'] .= '<form action="/add.php/comment/' . $_GET['post'] . '" method="post">
     <p>' . text('name') . '</p>
     <p>' . textarea('content') . '</p>
-    <p>' . submit('send') . '</p>
+    <p>' . submitSafe('send') . '</p>
     </form>';
   }
 } else if (isGET('tag') && isValidEntry('tags', $_GET['tag'])) {

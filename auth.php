@@ -10,20 +10,19 @@ if (isGET('login')) {
     $out['title'] = $lang['login'];
     $out['content'] .= '<form action="/auth.php/login" method="post">
     <p>' . password('password') . '</p>
-    <p>' . submit() . '</p>
+    <p>' . submitSafe($lang['confirm']) . '</p>
     </form>';
   }
 } else if (isGET('logout') && isAdmin()) {
   $_SESSION['role'] = '';
   home();
-} else if (isGET('test')) {
-  $nobot = checkBot();
+} else if (isGET('test') && isAdmin()) {
   $out['title'] = $lang['login'];
   $out['content'] .= '<form action="/auth.php/test" method="post">
   <p>' . password('password') . '</p>
-  <p>' . submit() . '</p>
+  <p>' . submitAdmin($lang['confirm']) . '</p>
   </form>';
-  if ($nobot && check('password'))
+  if (check('password'))
     $out['content'] .= box(hide($_POST['password']));
 } else {
   home();

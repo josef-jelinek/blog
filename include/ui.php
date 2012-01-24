@@ -26,13 +26,15 @@ function textarea($name, $default = '') {
   return '<textarea name="' . $name . '" rows="10">' . (isPOST($name) ? clean($_POST[$name]) : $default) . '</textarea>';
 }
 
-function submit($name = '') {
-  global $lang;
+function submitSafe($label) {
   $num1 = rand(0, 10);
   $num2 = rand(0, 10);
   $_SESSION['captcha'] = (string)($num1 * $num2);
-  $label = $name == '' ? $lang['confirm'] : $lang[$name];
   return $num1 . ' x ' . $num2 . ' = ? <input type="text" name="captcha" style="width:50px"> <input type="submit" value="' . $label . '">';
+}
+
+function submitAdmin($label) {
+  return '<input type="submit" value="' . $label . '">';
 }
 
 function select($name, $options, $default = '') {
@@ -73,7 +75,7 @@ function checkBot() {
     return false;
   if (isset($_SESSION['captcha']) && $_POST['captcha'] === $_SESSION['captcha'])
     return true;
-  message($lang['errorBot'] . ' ' . $_POST['captcha'] . ' <> ' . $_SESSION['captcha']);
+  message($lang['errorBot'] . ' "' . $_POST['captcha'] . '" <> ' . $_SESSION['captcha']);
   return false;
 }
 
@@ -86,7 +88,7 @@ function clean($text) {
 }
 
 function content($text) {
-  return nl2br($text, false);
+  return nl2br($text);
 }
 
 function commenter($name) {

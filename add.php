@@ -3,7 +3,7 @@ $out['self'] = 'add';
 require 'header.php';
 
 if (isGET('post') && isAdmin()) {
-  if (checkBot() && check('title') && check('content')) {
+  if (check('title') && check('content')) {
     $postEntry['title'] = clean($_POST['title']);
     $postEntry['content'] = $_POST['content'];
     $postEntry['comments'] = array();
@@ -18,7 +18,7 @@ if (isGET('post') && isAdmin()) {
     $out['content'] .= '<form action="/add.php/post" method="post" class="form">
     <p>' . text('title') . '</p>
     <p>' . textarea('content') . '</p>
-    <p>' . submit() . '</p>
+    <p>' . submitAdmin($lang['confirm']) . '</p>
     </form>';
     $out['content'] .= isPOST('content') ? box($_POST['content']) : '';
   }
@@ -41,12 +41,12 @@ if (isGET('post') && isAdmin()) {
     $out['content'] .= '<form action="/add.php/comment/' . $_GET['comment'] . '" method="post" class="form">
     <p>' . text('name') . '</p>
     <p>' . textarea('content') . '</p>
-    <p>' . submit() . '</p>
+    <p>' . submitSafe($lang['confirm']) . '</p>
     </form>';
     $out['content'] .= isPOST('content') ? box($_POST['content']) : '';
   }
 } else if (isGET('link') && isAdmin()) {
-  if (checkBot() && check('name') && check('url')) {
+  if (check('name') && check('url')) {
     $linkEntry['name'] = clean($_POST['name']);
     $linkEntry['url'] = clean($_POST['url']);
     saveEntry('links', newEntry(), $linkEntry);
@@ -56,11 +56,11 @@ if (isGET('post') && isAdmin()) {
     $out['content'] .= '<form action="/add.php/link" method="post" class="form">
     <p>' . text('name') . '</p>
     <p>' . text('url') . '</p>
-    <p>' . submit() . '</p>
+    <p>' . submitAdmin($lang['confirm']) . '</p>
     </form>';
   }
 } else if (isGET('tag') && isAdmin()) {
-  if (checkBot() && check('name')) {
+  if (check('name')) {
     $tagEntry['name'] = clean($_POST['name']);
     $tagEntry['posts'] = array();
     saveEntry('tags', newEntry(), $tagEntry);
@@ -69,7 +69,7 @@ if (isGET('post') && isAdmin()) {
     $out['title'] = $lang['addTag'];
     $out['content'] .= '<form action="/add.php/tag" method="post" class="form">
     <p>' . text('name') . '</p>
-    <p>' . submit() . '</p>
+    <p>' . submitAdmin($lang['confirm']) . '</p>
     </form>';
   }
 } else {

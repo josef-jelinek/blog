@@ -5,7 +5,7 @@ require 'header.php';
 if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
   $post = $_GET['post'];
   $postEntry = readEntry('posts', $post);
-  if (checkBot() && check('title') && check('content')) {
+  if (check('title') && check('content')) {
     $postEntry['title'] = clean($_POST['title']);
     $postEntry['content'] = $_POST['content'];
     $postEntry['locked'] = $_POST['locked'] === 'yes';
@@ -39,7 +39,7 @@ if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
     <p>' . select('published', array('yes' => $lang['yes'], 'no' => $lang['no']), $postEntry['published'] ? 'yes' : 'no') . '</p>
     <p>' . select('locked', array('yes' => $lang['yes'], 'no' => $lang['no']), $postEntry['locked'] ? 'yes' : 'no') . '</p>
     <p>' . multiselect('tags', $tagOptions, $postEntry['tags']) . '</p>
-    <p>' . submit() . '</p>
+    <p>' . submitAdmin($lang['confirm']) . '</p>
     </form>';
     $out['content'] .= isPOST('content') ? box($_POST['content']) : '';
   }
@@ -55,14 +55,14 @@ if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
     $out['title'] = $lang['editComment'];
     $out['content'] .= '<form action="/edit.php/comment/' . $comment. '" method="post">
     <p>' . textarea('content', $commentEntry['content']) . '</p>
-    <p>' . submit() . '</p>
+    <p>' . submitSafe($lang['confirm']) . '</p>
     </form>';
     $out['content'] .= isPOST('content') ? box($_POST['content']) : '';
   }
 } else if (isGET('link') && isAdmin() && isValidEntry('links', $_GET['link'])) {
   $link = $_GET['link'];
   $linkEntry = readEntry('links', $link);
-  if (checkBot() && check('name') && check('url')) {
+  if (check('name') && check('url')) {
     $linkEntry['name'] = clean($_POST['name']);
     $linkEntry['url'] = clean($_POST['url']);
     saveEntry('links', $link, $linkEntry);
@@ -72,12 +72,12 @@ if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
     $out['content'] .= '<form action="/edit.php/link/' . $link . '" method="post">
     <p>' . text('name', $linkEntry['name']) . '</p>
     <p>' . text('url', $linkEntry['url']) . '</p>
-    <p>' . submit() . '</p>
+    <p>' . submitAdmin($lang['confirm']) . '</p>
     </form>';
   }
 } else if (isGET('tag') && isAdmin() && isValidEntry('tags', $_GET['tag'])) {
   $tagEntry = readEntry('tags', $_GET['tag']);
-  if (checkBot() && check('name')) {
+  if (check('name')) {
     $tagEntry['name'] = clean($_POST['name']);
     saveEntry('tags', $_GET['tag'], $tagEntry);
     home();
@@ -85,7 +85,7 @@ if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
     $out['title'] = $lang['editTag'] . ': ' .$tagEntry['name'];
     $out['content'] .= '<form action="/edit.php/tag/' . $_GET['tag'] . '" method="post">
     <p>' . text('name', $tagEntry['name']) . '</p>
-    <p>' . submit() . '</p>
+    <p>' . submitAdmin($lang['confirm']) . '</p>
     </form>';
   }
 } else {
