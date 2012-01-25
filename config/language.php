@@ -20,7 +20,6 @@ $lang = array(
   'newDraft' => 'New Draft',
   'editDraft' => 'Edit Draft',
   'deleteDraft' => 'Delete Draft',
-  'more' => 'Read more...',
   'logout' => 'Logout',
   'login' => 'Login',
   'nextPage' => 'next',

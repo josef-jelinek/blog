@@ -14,7 +14,7 @@ function urlPath() {
 
 function baseURL() {
   $dir = dirname($_SERVER['SCRIPT_NAME']);
-  return 'http://' . $_SERVER['SERVER_NAME'] . $dir . ($dir === '/'? '' : '/');
+  return 'http://' . $_SERVER['SERVER_NAME'] . $dir . ($dir === '/' ? '' : '/');
 }
 
 function redirect($loc) {

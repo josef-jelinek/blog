@@ -1,4 +1,5 @@
 <?php
+$out = array();
 require 'header.php';
 
 function getFeedEntry($title, $url, $date, $content) {

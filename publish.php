@@ -1,4 +1,5 @@
 <?php
+$out = array();
 require 'header.php';
 
 if (isGET('draft') && isAdmin() && isValidEntry('drafts', $_GET['draft'])) {
