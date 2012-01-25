@@ -51,7 +51,6 @@ $lang = array(
   'yes' => 'Yes',
   'no' => 'No',
   'locked' => 'Locked',
-  'published' => 'Published',
   'day' => 'day',
   'hour' => 'hour',
   'minute' => 'minute',
