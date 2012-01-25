@@ -96,6 +96,10 @@ function commenter($name) {
   return $parts[0] . (isset($parts[1]) ? '#' . substr(md5($parts[1]), -5) : '');
 }
 
+function manageDraft($draft) {
+  return isAdmin() ? '<a href="/edit.php/draft/' . $draft . '" class="edit"></a><a href="/publish.php/draft/' . $draft . '" class="publish"></a><a href="/delete.php/draft/' . $draft . '" class="delete"></a>' : '';
+}
+
 function managePost($post) {
   return isAdmin() ? '<a href="/edit.php/post/' . $post . '" class="edit"></a><a href="/delete.php/post/' . $post . '" class="delete"></a>' : '';
 }

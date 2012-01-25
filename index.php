@@ -1,5 +1,4 @@
 <?php
-$out['self'] = 'index';
 require 'header.php';
 
 if (isGET('posts')) {
@@ -11,31 +10,50 @@ if (isGET('posts')) {
   $pages = pages($posts);
   $page = page($pages);
   if ($posts) {
-    $isAdmin = isAdmin();
     $first = true;
     foreach (pageItems($posts, $page) as $post) {
       $postEntry = readEntry('posts', $post);
-      if ($isAdmin || $postEntry['published']) {
-        $out['content'] .= $first ? '' : '<div class="div">&middot; &middot; &middot; &middot; &middot;</div>';
-        $first = false;
-        $out['content'] .= '<div class="post">
-        <h2><a href="/view.php/post/' . $post . '">' . $postEntry['title'] . managePost($post) . '</a></h2>
-        <div class="date">' . toDate($post) . '</div>';
-        $out['content'] .= '<div class="info">';
-        foreach ($postEntry['tags'] as $tag) {
-          $tagEntry = readEntry('tags', $tag);
-          $tagName = $tagEntry['name'];
-          $out['content'] .= '<a href="/view.php/tag/' . $tag . '">' . $tagName . '</a>';
-        }
-        $out['content'] .= '</div>
-        <div class="content">' . unslash($postEntry['content']) . '</div>';
-        $commentCount = $postEntry['comments'] ? count($postEntry['comments']) : 0;
-        $out['content'] .= $commentCount > 0 ? '<div class="ccount"><a href="/view.php/post/' . $post . '#comments">' . $commentCount . ($commentCount > 1 ? $lang['ncomments'] : $lang['ncomment']) . '</a></div>' : '';
-        $out['content'] .= '</div>';
+      $out['content'] .= $first ? '' : '<div class="div">&middot; &middot; &middot; &middot; &middot;</div>';
+      $first = false;
+      $out['content'] .= '<div class="post">
+      <h2><a href="/view.php/post/' . $post . '">' . $postEntry['title'] . managePost($post) . '</a></h2>
+      <div class="date">' . toDate($post) . '</div>';
+      $out['content'] .= '<div class="info">';
+      foreach ($postEntry['tags'] as $tag) {
+        $tagEntry = readEntry('tags', $tag);
+        $tagName = $tagEntry['name'];
+        $out['content'] .= '<a href="/view.php/tag/' . $tag . '">' . $tagName . '</a>';
       }
+      $out['content'] .= '</div>
+      <div class="content">' . unslash($postEntry['content']) . '</div>';
+      $commentCount = $postEntry['comments'] ? count($postEntry['comments']) : 0;
+      $out['content'] .= $commentCount > 0 ? '<div class="ccount"><a href="/view.php/post/' . $post . '#comments">' . $commentCount . ($commentCount > 1 ? $lang['ncomments'] : $lang['ncomment']) . '</a></div>' : '';
+      $out['content'] .= '</div>';
     }
   }
   $out['content'] .= paging($page, $pages, '/index.php/posts/all');
+} else if (isGET('drafts') && isAdmin()) {
+  $out['title'] = $lang['drafts'];
+  $out['titleHtml'] = '';
+  $out['content'] .= '';
+  $drafts = listEntry('drafts');
+  sort($drafts);
+  $pages = pages($drafts);
+  $page = page($pages);
+  if ($drafts) {
+    $first = true;
+    foreach (pageItems($drafts, $page) as $draft) {
+      $draftEntry = readEntry('drafts', $draft);
+      $out['content'] .= $first ? '' : '<div class="div">&middot; &middot; &middot; &middot; &middot;</div>';
+      $first = false;
+      $out['content'] .= '<div class="post">
+      <h2><a href="/view.php/draft/' . $draft . '">' . $draftEntry['title'] . manageDraft($draft) . '</a></h2>
+      <div class="date">' . toDate($draft) . '</div>';
+      $out['content'] .= '<div class="content">' . unslash($draftEntry['content']) . '</div>
+      </div>';
+    }
+  }
+  $out['content'] .= paging($page, $pages, '/index.php/drafts/all');
 } else if (isGET('comments')) {
   $out['title'] = $lang['comments'];
   $out['content'] .= '';
@@ -75,28 +93,25 @@ if (isGET('posts')) {
   $pages = pages($posts);
   $page = page($pages);
   if ($posts) {
-    $isAdmin = isAdmin();
     $first = true;
     foreach (pageItems($posts, $page) as $post) {
       $postEntry = readEntry('posts', $post);
-      if ($isAdmin || $postEntry['published']) {
-        $out['content'] .= $first ? '' : '<div class="div">&middot; &middot; &middot; &middot; &middot;</div>';
-        $first = false;
-        $out['content'] .= '<div class="post">
-        <h2><a href="/view.php/post/' . $post . '">' . $postEntry['title'] . managePost($post) . '</a></h2>
-        <div class="date">' . toDate($post) . '</div>';
-        $out['content'] .= '<div class="info">';
-        foreach ($postEntry['tags'] as $tag) {
-          $tagEntry = readEntry('tags', $tag);
-          $tagName = $tagEntry['name'];
-          $out['content'] .= '<a href="/view.php/tag/' . $tag . '">' . $tagName . '</a>';
-        }
-        $out['content'] .= '</div>
-        <div class="content">' . unslash($postEntry['content']) . '</div>';
-        $commentCount = $postEntry['comments'] ? count($postEntry['comments']) : 0;
-        $out['content'] .= $commentCount > 0 ? '<div class="ccount"><a href="/view.php/post/' . $post . '#comments">' . $commentCount . ($commentCount > 1 ? $lang['ncomments'] : $lang['ncomment']) . '</a></div>' : '';
-        $out['content'] .= '</div>';
+      $out['content'] .= $first ? '' : '<div class="div">&middot; &middot; &middot; &middot; &middot;</div>';
+      $first = false;
+      $out['content'] .= '<div class="post">
+      <h2><a href="/view.php/post/' . $post . '">' . $postEntry['title'] . managePost($post) . '</a></h2>
+      <div class="date">' . toDate($post) . '</div>';
+      $out['content'] .= '<div class="info">';
+      foreach ($postEntry['tags'] as $tag) {
+        $tagEntry = readEntry('tags', $tag);
+        $tagName = $tagEntry['name'];
+        $out['content'] .= '<a href="/view.php/tag/' . $tag . '">' . $tagName . '</a>';
       }
+      $out['content'] .= '</div>
+      <div class="content">' . unslash($postEntry['content']) . '</div>';
+      $commentCount = $postEntry['comments'] ? count($postEntry['comments']) : 0;
+      $out['content'] .= $commentCount > 0 ? '<div class="ccount"><a href="/view.php/post/' . $post . '#comments">' . $commentCount . ($commentCount > 1 ? $lang['ncomments'] : $lang['ncomment']) . '</a></div>' : '';
+      $out['content'] .= '</div>';
     }
   }
   $out['content'] .= paging($page, $pages, '/index.php');

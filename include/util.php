@@ -28,7 +28,11 @@ function shortNum($int) {
 
 function toDate($id, $pattern = 'Y/m/d H:i') {
   global $lang;
-  $timestamp = strtotime(substr($id, 0, 16));
+  $date = substr($id, 0, 19);
+  $date = substr_replace($date, 'T', 10, 1);
+  $date = substr_replace($date, ':', 13, 1);
+  $date = substr_replace($date, ':', 16, 1);
+  $timestamp = strtotime($date);
   $diff = time() - $timestamp;
   if ($pattern !== 'c' && $diff < 604800) { // 7 days
     if ($diff === 0)

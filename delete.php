@@ -1,5 +1,4 @@
 <?php
-$out['self'] = 'delete';
 require 'header.php';
 
 if (isGET('post') && isAdmin()) {
@@ -13,6 +12,9 @@ if (isGET('post') && isAdmin()) {
   }
   foreach ($postEntry['comment'] as $comment)
     deleteEntry('comments', $comment);
+  home();
+} else if (isGET('draft') && isAdmin()) {
+  deleteEntry('drafts', $_GET['draft']);
   home();
 } else if (isGET('comment') && (isAdmin() || isAuthor($_GET['comment']))) {
   $comment = $_GET['comment'];

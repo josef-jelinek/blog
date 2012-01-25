@@ -1,5 +1,4 @@
 <?php
-$out['self'] = 'feed';
 require 'header.php';
 
 function getFeedEntry($title, $url, $date, $content) {
@@ -37,11 +36,9 @@ if (isGET('comments')) {
   if ($items) {
     foreach ($items as $item) {
       $itemData = readEntry('posts', $item);
-      if ($itemData['published']) {
-        $title = clean($itemData['title']);
-        $url = $out['baseURL'] . 'view.php/post/' . $item;
-        $out['content'] .= getFeedEntry($title, $url, toDate($item, 'c'), unslash($itemData['content']));
-      }
+      $title = clean($itemData['title']);
+      $url = $out['baseURL'] . 'view.php/post/' . $item;
+      $out['content'] .= getFeedEntry($title, $url, toDate($item, 'c'), unslash($itemData['content']));
     }
   }
 }

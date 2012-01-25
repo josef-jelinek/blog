@@ -18,7 +18,8 @@ header('Content-Type: text/html; charset=UTF-8');
       <a href="/index.php"><?php echo $lang['home'];?></a>
       <a href="/index.php/posts"><?php echo $lang['posts'];?></a>
       <a href="/index.php/comments"><?php echo $lang['comments'];?></a>
-      <?php if (isAdmin()) echo '<a href="/add.php/post">' . $lang['newPost'] . '</a>';?>
+      <?php if (isAdmin()) echo '<a href="/index.php/drafts">' . $lang['drafts'] . '</a>';?>
+      <?php if (isAdmin()) echo '<a href="/add.php/draft">' . $lang['newDraft'] . '</a>';?>
     </div>
     <div class="ctl">
       <a href="/feed.php/posts" class="postfeed"><?php echo $lang['posts'];?></a>

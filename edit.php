@@ -1,5 +1,4 @@
 <?php
-$out['self'] = 'edit';
 require 'header.php';
 
 if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
@@ -9,7 +8,6 @@ if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
     $postEntry['title'] = clean($_POST['title']);
     $postEntry['content'] = $_POST['content'];
     $postEntry['locked'] = $_POST['locked'] === 'yes';
-    $postEntry['published'] = $_POST['published'] === 'yes';
     $newTags = $_POST['tags'] ? $_POST['tags'] : array();
     $addedTags = array_diff($newTags, $postEntry['tags']);
     $removedTags = array_diff($postEntry['tags'], $newTags);
@@ -36,9 +34,25 @@ if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
     $out['content'] .= '<form action="/edit.php/post/' . $post . '" method="post">
     <p>' . text('title', $postEntry['title']) . '</p>
     <p>' . textarea('content', clean($postEntry['content'])) . '</p>
-    <p>' . select('published', array('yes' => $lang['yes'], 'no' => $lang['no']), $postEntry['published'] ? 'yes' : 'no') . '</p>
     <p>' . select('locked', array('yes' => $lang['yes'], 'no' => $lang['no']), $postEntry['locked'] ? 'yes' : 'no') . '</p>
     <p>' . multiselect('tags', $tagOptions, $postEntry['tags']) . '</p>
+    <p>' . submitAdmin($lang['confirm']) . '</p>
+    </form>';
+    $out['content'] .= isPOST('content') ? box($_POST['content']) : '';
+  }
+} else if (isGET('draft') && isAdmin() && isValidEntry('drafts', $_GET['draft'])) {
+  $draft = $_GET['draft'];
+  $draftEntry = readEntry('drafts', $draft);
+  if (check('title') && check('content')) {
+    $draftEntry['title'] = clean($_POST['title']);
+    $draftEntry['content'] = $_POST['content'];
+    saveEntry('drafts', $draft, $draftEntry);
+    redirect('view.php/draft/' . $draft);
+  } else {
+    $out['title'] = $lang['editDraft'] . ': ' . $draftEntry['title'];
+    $out['content'] .= '<form action="/edit.php/draft/' . $draft . '" method="post">
+    <p>' . text('title', $draftEntry['title']) . '</p>
+    <p>' . textarea('content', clean($draftEntry['content'])) . '</p>
     <p>' . submitAdmin($lang['confirm']) . '</p>
     </form>';
     $out['content'] .= isPOST('content') ? box($_POST['content']) : '';

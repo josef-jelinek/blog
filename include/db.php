@@ -24,7 +24,7 @@ function isValidEntry($type, $file) {
   return indir($file . '.php', "data/$type");
 }
 
-function newEntry() {
-  return date('Y-m-dHis').substr(uniqid(), -5);
+function newEntry($id = '') {
+  return date('Y-m-d-H-i-s-') . ($id != '' ? $id : uniqid());
 }
 ?>

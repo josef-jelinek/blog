@@ -1,22 +1,18 @@
 <?php
-$out['self'] = 'add';
 require 'header.php';
 
-if (isGET('post') && isAdmin()) {
+if (isGET('draft') && isAdmin()) {
   if (check('title') && check('content')) {
     $postEntry['title'] = clean($_POST['title']);
     $postEntry['content'] = $_POST['content'];
-    $postEntry['comments'] = array();
-    $postEntry['tags'] = array();
-    $postEntry['locked'] = false;
-    $postEntry['published'] = false;
-    $post = newEntry();
-    saveEntry('posts', $post, $postEntry);
-    redirect('view.php/post/' . $post);
+    $post = newEntry($_POST['id']);
+    saveEntry('drafts', $post, $postEntry);
+    redirect('view.php/draft/' . $post);
   } else {
     $out['title'] = $lang['newPost'];
-    $out['content'] .= '<form action="/add.php/post" method="post" class="form">
+    $out['content'] .= '<form action="/add.php/draft" method="post" class="form">
     <p>' . text('title') . '</p>
+    <p>' . text('id') . '</p>
     <p>' . textarea('content') . '</p>
     <p>' . submitAdmin($lang['confirm']) . '</p>
     </form>';
@@ -30,7 +26,7 @@ if (isGET('post') && isAdmin()) {
     $commentEntry['content'] = clean($_POST['content']);
     $commentEntry['post'] = $_GET['comment'];
     $comment = newEntry();
-    $commentEntry['commenter'] = $_POST['name'] === '' ? substr($comment, -5) : commenter(clean($_POST['name']));
+    $commentEntry['commenter'] = commenter(clean($_POST['name']));
     saveEntry('comments', $comment, $commentEntry);
     $postEntry['comments'][$comment] = $comment;
     saveEntry('posts', $_GET['comment'], $postEntry);

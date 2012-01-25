@@ -1,5 +1,4 @@
 <?php
-$out['self'] = 'search';
 require 'header.php';
 
 if (check('text')) {

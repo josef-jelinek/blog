@@ -143,7 +143,7 @@ input[type="text"] { width: 50%; }
   text-decoration: none;
 }
 .button:active, .button:focus { border-color: #8E5; outline: none; }
-a.add, a.edit, a.delete {
+a.add, a.edit, a.delete, a.publish {
   display: inline-block;
   width: 16px; height: 16px;
   margin-left: 4px;
@@ -152,4 +152,5 @@ a.add, a.edit, a.delete {
 }
 a.edit { background: url(/img/edit16.png) 50% 50% no-repeat; }
 a.delete { background: url(/img/delete16.png) 50% 50% no-repeat; }
+a.publish { background: url(/img/publish16.png) 50% 50% no-repeat; }
 .div { text-align: center; color: #DDD; }

@@ -1,5 +1,4 @@
 <?php
-$out['self'] = 'view';
 require 'header.php';
 
 if (isGET('post') && isValidEntry('posts', $_GET['post'])) {
@@ -45,6 +44,15 @@ if (isGET('post') && isValidEntry('posts', $_GET['post'])) {
     <p>' . submitSafe('send') . '</p>
     </form>';
   }
+} else if (isGET('draft') && isValidEntry('drafts', $_GET['draft'])) {
+  $draftEntry = readEntry('drafts', $_GET['draft']);
+  $out['title'] = $draftEntry['title'];
+  $out['titleHtml'] = '';
+  $out['content'] .= '<div class="post">
+  <h1 class="title">' . $out['title'] . manageDraft($_GET['draft']) . '</h1>
+  <div class="date">' . toDate($_GET['draft']) . '</div>';
+  $out['content'] .= '<div class="content">' . unslash($draftEntry['content']) . '</div>
+  </div>';
 } else if (isGET('tag') && isValidEntry('tags', $_GET['tag'])) {
   $tagEntry = readEntry('tags', $_GET['tag']);
   $out['title'] = $tagEntry['name'];
