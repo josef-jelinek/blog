@@ -8,15 +8,15 @@ if (isGET('post') && isValidEntry('posts', $_GET['post'])) {
   $out['titleHtml'] = '';
   $out['content'] .= '<div class="post">
   <h1 class="title">' . $out['title'] . managePost($_GET['post']) . '</h1>
-  <div class="date">' . toDate($_GET['post']) . '</div>';
-  $out['content'] .= '<div class="content">' . unslash($postEntry['content']) . '</div>';
-  $out['content'] .= '<div class="info">';
+  <div class="date">' . toDate($_GET['post']) . '</div>
+  <div class="info">';
   foreach ($postEntry['tags'] as $tag) {
     $tagEntry = readEntry('tags', $tag);
     $tagName = $tagEntry['name'];
     $out['content'] .= '<a href="/view.php/tag/' . $tag . '">' . $tagName . '</a>';
   }
   $out['content'] .= '</div>
+  <div class="content">' . $postEntry['content'] . '</div>
   </div>';
   $pages = pages($postEntry['comments']);
   $page = page($pages);
@@ -52,7 +52,7 @@ if (isGET('post') && isValidEntry('posts', $_GET['post'])) {
   $out['content'] .= '<div class="post">
   <h1 class="title">' . $out['title'] . manageDraft($_GET['draft']) . '</h1>
   <div class="date">' . toDate($_GET['draft']) . '</div>';
-  $out['content'] .= '<div class="content">' . unslash($draftEntry['content']) . '</div>
+  $out['content'] .= '<div class="content">' . $draftEntry['content'] . '</div>
   </div>';
 } else if (isGET('tag') && isValidEntry('tags', $_GET['tag'])) {
   $tagEntry = readEntry('tags', $_GET['tag']);

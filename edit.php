@@ -6,8 +6,8 @@ if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
   $post = $_GET['post'];
   $postEntry = readEntry('posts', $post);
   if (check('title') && check('content')) {
-    $postEntry['title'] = clean($_POST['title']);
-    $postEntry['content'] = $_POST['content'];
+    $postEntry['title'] = clean(cleanMagic($_POST['title']));
+    $postEntry['content'] = cleanMagic($_POST['content']);
     $postEntry['locked'] = $_POST['locked'] === 'yes';
     $newTags = $_POST['tags'] ? $_POST['tags'] : array();
     $addedTags = array_diff($newTags, $postEntry['tags']);
@@ -39,14 +39,14 @@ if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
     <p>' . multiselect('tags', $tagOptions, $postEntry['tags']) . '</p>
     <p>' . submitAdmin($lang['confirm']) . '</p>
     </form>';
-    $out['content'] .= isPOST('content') ? box($_POST['content']) : '';
+    $out['content'] .= isPOST('content') ? box(cleanMagic($_POST['content'])) : '';
   }
 } else if (isGET('draft') && isAdmin() && isValidEntry('drafts', $_GET['draft'])) {
   $draft = $_GET['draft'];
   $draftEntry = readEntry('drafts', $draft);
   if (check('title') && check('content')) {
-    $draftEntry['title'] = clean($_POST['title']);
-    $draftEntry['content'] = $_POST['content'];
+    $draftEntry['title'] = clean(cleanMagic($_POST['title']));
+    $draftEntry['content'] = cleanMagic($_POST['content']);
     saveEntry('drafts', $draft, $draftEntry);
     redirect('view.php/draft/' . $draft);
   } else {
@@ -56,13 +56,13 @@ if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
     <p>' . textarea('content', clean($draftEntry['content'])) . '</p>
     <p>' . submitAdmin($lang['confirm']) . '</p>
     </form>';
-    $out['content'] .= isPOST('content') ? box($_POST['content']) : '';
+    $out['content'] .= isPOST('content') ? box(cleanMagic($_POST['content'])) : '';
   }
 } else if (isGET('comment') && (isAdmin() || isAuthor($_GET['comment'])) && isValidEntry('comments', $_GET['comment'])) {
   $comment = $_GET['comment'];
   $commentEntry = readEntry('comments', $comment);
   if (checkBot() && check('content', $config['maxCommentLength'])) {
-    $commentEntry['content'] = clean($_POST['content']);
+    $commentEntry['content'] = clean(cleanMagic($_POST['content']));
     saveEntry('comments', $comment, $commentEntry);
     $postEntry = readEntry('posts', $commentEntry['post']);
     redirect('view.php/post/' . $commentEntry['post'] . '/pages/' . pageOf($comment, $postEntry['comment']) . '#' . $comment);
@@ -72,14 +72,14 @@ if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
     <p>' . textarea('content', $commentEntry['content']) . '</p>
     <p>' . submitSafe($lang['confirm']) . '</p>
     </form>';
-    $out['content'] .= isPOST('content') ? box($_POST['content']) : '';
+    $out['content'] .= isPOST('content') ? box(cleanMagic($_POST['content'])) : '';
   }
 } else if (isGET('link') && isAdmin() && isValidEntry('links', $_GET['link'])) {
   $link = $_GET['link'];
   $linkEntry = readEntry('links', $link);
   if (check('name') && check('url')) {
-    $linkEntry['name'] = clean($_POST['name']);
-    $linkEntry['url'] = clean($_POST['url']);
+    $linkEntry['name'] = clean(cleanMagic($_POST['name']));
+    $linkEntry['url'] = clean(cleanMagic($_POST['url']));
     saveEntry('links', $link, $linkEntry);
     home();
   } else {
@@ -93,7 +93,7 @@ if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
 } else if (isGET('tag') && isAdmin() && isValidEntry('tags', $_GET['tag'])) {
   $tagEntry = readEntry('tags', $_GET['tag']);
   if (check('name')) {
-    $tagEntry['name'] = clean($_POST['name']);
+    $tagEntry['name'] = clean(cleanMagic($_POST['name']));
     saveEntry('tags', $_GET['tag'], $tagEntry);
     home();
   } else {

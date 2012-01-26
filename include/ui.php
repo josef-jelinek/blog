@@ -1,4 +1,16 @@
 <?php
+function clean($text) {
+  return htmlspecialchars(trim($text), ENT_QUOTES);
+}
+
+function content($text) {
+  return nl2br($text);
+}
+
+function cleanMagic($text) {
+  return get_magic_quotes_gpc() ? stripslashes($text) : $text;
+}
+
 function isGET($name) {
   return isset($_GET[$name]) && is_string($_GET[$name]);
 }
@@ -19,11 +31,11 @@ function password($name) {
 
 function text($name, $default = '') {
   global $lang;
-  return $lang[$name] . ' <input type="text" name="' . $name . '" value="' . (isPOST($name) ? clean($_POST[$name]) : $default) . '">';
+  return $lang[$name] . ' <input type="text" name="' . $name . '" value="' . (isPOST($name) ? clean(cleanMagic($_POST[$name])) : $default) . '">';
 }
 
 function textarea($name, $default = '') {
-  return '<textarea name="' . $name . '" rows="10">' . (isPOST($name) ? clean($_POST[$name]) : $default) . '</textarea>';
+  return '<textarea name="' . $name . '" rows="10">' . (isPOST($name) ? clean(cleanMagic($_POST[$name])) : $default) . '</textarea>';
 }
 
 function submitSafe($label) {
@@ -39,7 +51,7 @@ function submitAdmin($label) {
 
 function select($name, $options, $default = '') {
   global $lang;
-  $selected = isPOST($name) && isset($options[$_POST[$name]]) ? $_POST[$name] : $default;
+  $selected = isPOST($name) && isset($options[cleanMagic($_POST[$name])]) ? cleanMagic($_POST[$name]) : $default;
   $out = $lang[$name] . ' <select name="' . $name . '">';
   foreach ($options as $value => $option)
     $out .= '<option value="' . $value . '"' . ($value == $selected ? ' selected' : '') . '>' . $option . '</option>';
@@ -62,7 +74,7 @@ function check($name, $max = 0) {
   global $lang;
   if (!isPOST($name))
     return false;
-  $len = strlen(trim($_POST[$name]));
+  $len = strlen(trim(cleanMagic($_POST[$name])));
   if ($len >= 1 && ($max == 0 || $len <= $max))
     return true;
   message($lang[$name] . $lang[$len == 0 ? 'errorEmpty' : 'errorTooLong']);
@@ -73,27 +85,10 @@ function checkBot() {
   global $lang;
   if (!isPOST('captcha'))
     return false;
-  if (isset($_SESSION['captcha']) && $_POST['captcha'] === $_SESSION['captcha'])
+  if (isset($_SESSION['captcha']) && cleanMagic($_POST['captcha']) === $_SESSION['captcha'])
     return true;
-  message($lang['errorBot'] . ' "' . $_POST['captcha'] . '" <> ' . $_SESSION['captcha']);
+  message($lang['errorBot'] . ' "' . cleanMagic($_POST['captcha']) . '" <> ' . $_SESSION['captcha']);
   return false;
-}
-
-function unslash($text) {
-  return get_magic_quotes_gpc() ? stripslashes($text) : $text;
-}
-
-function clean($text) {
-  return htmlspecialchars(trim(unslash($text)), ENT_QUOTES);
-}
-
-function content($text) {
-  return nl2br($text);
-}
-
-function commenter($name) {
-  $parts = explode('#', $name, 2);
-  return $parts[0] . (isset($parts[1]) ? '#' . substr(md5($parts[1]), -5) : '');
 }
 
 function manageDraft($draft) {

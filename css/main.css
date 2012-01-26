@@ -105,7 +105,7 @@ input[type="text"] { width: 50%; }
 .post { padding: 10px 0; }
 #comments { margin: 0 -5px; padding: 10px 0 5px; }
 .comment { padding: 10px; border-radius: 5px; background: #F8F8F8; }
-.post .content { padding: 10px 0 0; }
+.post .content { margin: 10px 0 0; }
 .comment .content { margin: 5px 0 0; }
 .title { font-size: 16px; }
 .post h1 { margin-top: 0; }

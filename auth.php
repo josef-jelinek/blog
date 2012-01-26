@@ -3,7 +3,7 @@ $out = array();
 require 'header.php';
 
 if (isGET('login')) {
-  if (checkBot() && check('password') && login($_POST['password'])) {
+  if (checkBot() && check('password') && login(cleanMagic($_POST['password']))) {
     session_regenerate_id(true);
     home();
   } else {
@@ -23,7 +23,7 @@ if (isGET('login')) {
   <p>' . submitAdmin($lang['confirm']) . '</p>
   </form>';
   if (check('password'))
-    $out['content'] .= box(hide($_POST['password']));
+    $out['content'] .= box(hide(cleanMagic($_POST['password'])));
 } else {
   home();
 }

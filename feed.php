@@ -39,7 +39,7 @@ if (isGET('comments')) {
       $itemData = readEntry('posts', $item);
       $title = clean($itemData['title']);
       $url = $out['baseURL'] . 'view.php/post/' . $item;
-      $out['content'] .= getFeedEntry($title, $url, toDate($item, 'c'), unslash($itemData['content']));
+      $out['content'] .= getFeedEntry($title, $url, toDate($item, 'c'), $itemData['content']);
     }
   }
 }
