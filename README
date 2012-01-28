@@ -1,0 +1,31 @@
+Simple (to the point of being trivial) PHP Blog Engine using file system instead of a DB.
+
+created by josef.jelinek@gmail.com
+
+Main points:
+  - installed by copying files to a remote server, updating a simple config file
+  - posts created by the person with the password - the Author (the initial one is "test" without quotes)
+  - posts created as drafts (not visible to viewers), then published when ready
+  - posts created as HTML
+  - editing and deleting drafts, posts, and comments is available only to the Author
+  - comments created as plain text preserving line breaks
+  - comments open for viewers to add and to edit what they posted for a couple of minutes
+  - adding comments can be frozen per post
+  - categorization using customizable tags
+  - Atom feed for posts and all comments
+  - full text search in posts
+  - 42kB of formatted PHP+HTML+CSS source code (+ 24kb images)
+
+Possible problems:
+  - if you cannot post anything, the file access rights are probably preventing PHP to write to the data/* directories
+    set the rights for the directories under the data directory to read/write (0777 under unix/linux)
+    you can usually use even ftp application by sending a server SITE command - e.g. for data/posts directory:
+      quote site chmod 0777 data/posts
+  - IE6 and IE7 are supported to a certain degree, IE8 is a bit better, IE9 seems working fine
+
+Changing your password:
+  - currently a bit tricky, but it is usually very infrequent operation
+  - sign in using the current password (initially it is "test" without quotes)
+  - go to your site /auth.php/test
+  - enter the new password and submit
+  - replace the code in /config/config.php by the newly generated code on the page
