@@ -1,4 +1,21 @@
 <?php
+function fdir($dir) {
+  $files = array();
+  $dh = opendir($dir);
+  while (false !== ($file = readdir($dh))) {
+    if (strpos($file, '.', 0) > 0) {
+      $file = explode('.', $file, 2);
+      $files[] = $file[0];
+    }
+  }
+  closedir($dh);
+  return $files;
+}
+
+function listEntry($type) {
+  return fdir("data/$type");
+}
+
 function nameEntry($type, $file) {
   return "data/$type/$file.php";
 }
@@ -16,12 +33,8 @@ function deleteEntry($type, $file) {
   unlink(nameEntry($type, $file));
 }
 
-function listEntry($type) {
-  return fdir("data/$type");
-}
-
 function isValidEntry($type, $file) {
-  return indir($file . '.php', "data/$type");
+  return file_exists(nameEntry($type, $file));
 }
 
 function newEntry($id = '') {

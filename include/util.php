@@ -52,23 +52,6 @@ function hide($text) {
   return md5($text . md5($text));
 }
 
-function fdir($dir) {
-  $files = array();
-  $dh = opendir($dir);
-  while (false !== ($file = readdir($dh))) {
-    if ($file !== '.' && $file !== '..') {
-      $file = explode('.', $file, 2);
-      $files[] = $file[0];
-    }
-  }
-  closedir($dh);
-  return $files;
-}
-
-function indir($file, $dir) {
-  return file_exists("$dir/$file");
-}
-
 function isAdmin() {
   return $_SESSION['role'] === 'admin';
 }
