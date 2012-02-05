@@ -11,11 +11,8 @@ if (isGET('posts')) {
   $pages = pages($posts);
   $page = page($pages);
   if ($posts) {
-    $first = true;
     foreach (pageItems($posts, $page) as $post) {
       $postEntry = readEntry('posts', $post);
-      $out['content'] .= $first ? '' : '<div class="div">&middot; &middot; &middot; &middot; &middot;</div>';
-      $first = false;
       $out['content'] .= '<div class="post">
       <h2><a href="/view.php/post/' . $post . '">' . $postEntry['title'] . managePost($post) . '</a></h2>
       <div class="date">' . toDate($post) . '</div>';
@@ -25,8 +22,7 @@ if (isGET('posts')) {
         $tagName = $tagEntry['name'];
         $out['content'] .= '<a href="/view.php/tag/' . $tag . '">' . $tagName . '</a>';
       }
-      $out['content'] .= '</div>
-      <div class="content">' . $postEntry['content'] . '</div>';
+      $out['content'] .= '</div>';
       $commentCount = $postEntry['comments'] ? count($postEntry['comments']) : 0;
       $out['content'] .= $commentCount > 0 ? '<div class="ccount"><a href="/view.php/post/' . $post . '#comments">' . $commentCount . ($commentCount > 1 ? $lang['ncomments'] : $lang['ncomment']) . '</a></div>' : '';
       $out['content'] .= '</div>';
