@@ -15,8 +15,9 @@ body {
   min-width: 720px;
   margin: 0 auto; padding: 10px;
 }
-ul, p { margin: 10px 0; }
-ul { list-style: none; padding-left: 8px; }
+ul, p { margin: 10px 0; padding: 0; }
+ul { list-style: none; padding-left: 15px; }
+li { margin: 5px 0; padding: 0; }
 a { color: #150; text-decoration: none; }
 a:hover { color: #260; text-decoration: underline; }
 h1 { font-size: 16px; font-weight: normal; margin: 10px 0 0; padding: 0; }
