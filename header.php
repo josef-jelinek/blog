@@ -59,7 +59,7 @@ if ($archives) {
     $out['archiveListItems'] .= '<li>' . $year . '&nbsp;';
     foreach ($months as $month => $count) {
       $yearMonth = $year . '-' . $month;
-      $out['archiveListItems'] .= ' <a href="/view.php/archive/' . $yearMonth . '">' . date('M', strtotime($yearMonth)) . ' (' . $count . ')</a>';
+      $out['archiveListItems'] .= ' &nbsp;<a href="/view.php/archive/' . $yearMonth . '">' . date('M', strtotime($yearMonth)) . ' (' . $count . ')</a>';
     }
     $out['archiveListItems'] .= '</li>';
   }
