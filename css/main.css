@@ -29,15 +29,13 @@ input[type="text"], input[type="password"], textarea {
 }
 textarea { width: 98%; }
 input[type="text"] { width: 50%; }
+code, pre, tt, .block { font: 12px/100% 'Anonymous Pro', monospace; }
 .post .img { max-width: 100%; border: 0; display: block; margin: 10px auto; }
 .post iframe { border: 0; display: block; margin: 10px auto; }
 .block {
   margin: 5px 0;
   padding: 10px;
   background: #F8F8F8;
-  font-size: 12px;
-  line-height: 100%;
-  font-family: monospace;
   white-space: pre-wrap;
   border-radius: 5px;
 }
@@ -48,7 +46,7 @@ input[type="text"] { width: 50%; }
 #main { float: left; width: 100%; margin-right: -245px; }
 #content { margin: 0 240px 0 5px; }
 #sidebar {
-  float: right; width: 195px;
+  float: right; width: 195px; overflow: hidden;
   margin: 5px -5px 0 0;
   padding: 0 10px 10px;
   background: #F8F8F8;
@@ -60,7 +58,7 @@ input[type="text"] { width: 50%; }
   background: #CE6;
   border-radius: 5px;
 }
-#menu a { display: inline-block; }
+#menu a { display: inline-block; color: #000; }
 #menu .nav { float: left; height: 16px; line-height: 16px; }
 #menu .nav a { margin-right: 10px; }
 #menu .ctl { text-align: right; height: 16px; line-height: 16px; }
@@ -93,7 +91,7 @@ input[type="text"] { width: 50%; }
   background: url(/img/search16.png) 50% 50% no-repeat;
   cursor: pointer;
 }
-#footer { clear: both; height: 1px; }
+#footer { clear: both; font-size: 13px; padding: 10px 0; text-align: right; color: #333; }
 #page { margin: 10px 0 20px; font-size: 13px; }
 #page a, #page b { display: inline-block; margin: 0 15px 0 0; padding: 0; }
 #page b { color: #666; }

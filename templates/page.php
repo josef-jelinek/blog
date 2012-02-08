@@ -2,20 +2,25 @@
 if (!isset($out)) exit;
 header('Content-Type: text/html; charset=UTF-8');
 ?><!doctype html>
-<html>
+<html itemscope itemtype="http://schema.org/Blog">
 <head>
   <meta charset="UTF-8">
   <title><?php echo $out['title'] . ' - ' . $config['title'];?></title>
-  <meta name="description" content="<?php echo $out['title'];?>">
-  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400&amp;subset=latin-ext,latin" rel="stylesheet" type="text/css">
+  <meta name="description" content="<?php echo $config['description'];?>">
+  <meta itemprop="name" content="<?php echo $config['title'] . ' - ' . $out['title'];?>">
+  <meta itemprop="description" content="<?php echo $config['description'];?>">
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400|Anonymous+Pro:400,400italic&amp;subset=latin-ext,latin" rel="stylesheet" type="text/css">
   <link rel="stylesheet" type="text/css" href="/css/main.css">
   <link rel="alternate" type="application/atom+xml" href="/feed.php/posts" title="<?php echo $config['title'];?>">
+  <script type="text/javascript">
+    /* analytics etc. */
+  </script> 
 </head>
 <body>
   <div id="header"><?php echo $config['title'];?></div>
   <div id="menu">
     <div class="nav">
-      <a href="/index.php"><?php echo $lang['home'];?></a>
+      <a href="/"><?php echo $lang['home'];?></a>
       <a href="/index.php/posts"><?php echo $lang['posts'];?></a>
       <a href="/index.php/comments"><?php echo $lang['comments'];?></a>
       <?php if (isAdmin()) echo '<a href="/index.php/drafts">' . $lang['drafts'] . '</a>';?>
@@ -50,7 +55,9 @@ header('Content-Type: text/html; charset=UTF-8');
     <?php }?>
     <h3><?php echo $lang['archive'];?></h3>
     <ul><?php echo $out['archiveListItems'];?></ul>
+    <br><div class="g-plusone" data-size="medium" data-annotation="inline" data-width="195" data-href="http://-THE-REPRESENTATIVE-DOMAIN-"></div>
   </div>
-  <div id="footer"></div>
+  <div id="footer">powered by <a href="https://github.com/josef-jelinek/blog">josef-jelinek/blog engine</a></div>
+  <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 </body>
 </html>
