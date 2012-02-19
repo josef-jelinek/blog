@@ -12,6 +12,8 @@ if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
     $newTags = $_POST['tags'] ? $_POST['tags'] : array();
     $addedTags = array_diff($newTags, $postEntry['tags']);
     $removedTags = array_diff($postEntry['tags'], $newTags);
+    $postEntry['tags'] = $newTags;
+    saveEntry('posts', $post, $postEntry);
     foreach ($removedTags as $tag) {
       $tagEntry = readEntry('tags', $tag);
       unset($tagEntry['posts'][$post]);
@@ -22,8 +24,6 @@ if (isGET('post') && isAdmin() && isValidEntry('posts', $_GET['post'])) {
       $tagEntry['posts'][$post] = $post;
       saveEntry('tags', $tag, $tagEntry);
     }
-    $postEntry['tags'] = $newTags;
-    saveEntry('posts', $post, $postEntry);
     redirect('view.php/post/' . $post);
   } else {
     $tagOptions = array();

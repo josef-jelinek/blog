@@ -9,7 +9,7 @@ function getFeedEntry($title, $url, $date, $content) {
     <link href="' . $url . '"/>
     <id>' . $url . '</id>
     <updated>' . $date . '</updated>
-    <summary type="html">' . htmlspecialchars($content, ENT_NOQUOTES) . '</summary>
+    <content type="html">' . str_replace('<', '&lt;', str_replace('&', '&amp;', str_replace('<br />', '<br>', $content))) . '</content>
   </entry>';
 }
 

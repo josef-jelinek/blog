@@ -5,12 +5,18 @@ require 'header.php';
 if (isGET('draft') && isAdmin() && isValidEntry('drafts', $_GET['draft'])) {
   $draft = $_GET['draft'];
   if (check('title') && check('content') && check('id')) {
+    $post = newEntry(cleanMagic($_POST['id']));
     $postEntry['title'] = clean(cleanMagic($_POST['title']));
     $postEntry['content'] = cleanMagic($_POST['content']);
     $postEntry['locked'] = $_POST['locked'] === 'yes';
-    $postEntry['tags'] = $_POST['tags'] ? $_POST['tags'] : array();
-    $post = newEntry(cleanMagic($_POST['id']));
+    $addedTags = $_POST['tags'] ? $_POST['tags'] : array();
+    $postEntry['tags'] = $addedTags;
     saveEntry('posts', $post, $postEntry);
+    foreach ($addedTags as $tag) {
+      $tagEntry = readEntry('tags', $tag);
+      $tagEntry['posts'][$post] = $post;
+      saveEntry('tags', $tag, $tagEntry);
+    }
     deleteEntry('drafts', $draft);
     redirect('view.php/post/' . $post);
   } else {
