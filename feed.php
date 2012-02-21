@@ -2,13 +2,20 @@
 $out = array();
 require 'header.php';
 
-function getFeedEntry($title, $url, $date, $content) {
+function getFeedEntry($title, $url, $date, $content, $tags = array()) {
+  $cats = '';
+  foreach ($tags as $tag) {
+    $tagEntry = readEntry('tags', $tag);
+    $tagName = $tagEntry['name'];
+    $cats .= "<category term=\"$tagName\"/>";
+  }
   return '
   <entry>
     <title>' . $title . '</title>
     <link href="' . $url . '"/>
     <id>' . $url . '</id>
     <updated>' . $date . '</updated>
+    ' . $cats . '
     <content type="html">' . str_replace('<', '&lt;', str_replace('&', '&amp;', str_replace('<br />', '<br>', $content))) . '</content>
   </entry>';
 }
@@ -39,7 +46,7 @@ if (isGET('comments')) {
       $itemData = readEntry('posts', $item);
       $title = clean($itemData['title']);
       $url = $out['baseURL'] . 'view.php/post/' . $item;
-      $out['content'] .= getFeedEntry($title, $url, toDate($item, 'c'), $itemData['content']);
+      $out['content'] .= getFeedEntry($title, $url, toDate($item, 'c'), $itemData['content'], $itemData['tags']);
     }
   }
 }
