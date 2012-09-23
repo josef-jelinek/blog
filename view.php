@@ -36,6 +36,8 @@ if (isGET('post') && isValidEntry('posts', $_GET['post'])) {
       </div>';
     }
     $out['content'] .= '</div>';
+  } else {
+    $out['content'] .= '<div id="comments"></div>';
   }
   $out['content'] .= paging($page, $pages, '/view.php/post/' . $_GET['post'] . '#comments');
   if (!$postEntry['locked']) {

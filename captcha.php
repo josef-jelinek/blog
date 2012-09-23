@@ -25,11 +25,10 @@ $font_scale = 1 + 0.09 * ($max_length - $length);
 $x = 20 * $scale;
 $y = round($height * 27 / 40 * $scale);
 for ($i = 0; $i < $length; $i++) {
-    $angle = rand(-9, 9);
-    $font_size = rand(22, 30) * $scale * $font_scale;
-    $letter = substr($text, $i, 1);
-    $coords = imagettftext($im, $font_size, $angle, $x, $y, $fg, $font, $letter);
-    $x = $coords[2];
+  $font_size = rand(22, 30) * $scale * $font_scale;
+  $angle = rand(-9, 9);
+  $coords = imagettftext($im, $font_size, $angle, $x, $y, $fg, $font, substr($text, $i, 1));
+  $x = $coords[2];
 }
 $xp = $scale * 11 * rand(1, 3);
 $k = rand(0, 100);

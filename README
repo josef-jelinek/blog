@@ -14,7 +14,16 @@ Main points:
   - categorization using customizable tags
   - Atom feed for posts and all comments
   - full text search in posts
-  - 42kB of formatted PHP+HTML+CSS source code (+ 24kb images)
+  - graphical CAPTCHA preventing (to a degree) automated spammers
+  - ~50kB of formatted PHP+HTML+CSS source code (+ 24kb images)
+
+Instalation:
+  - download the repository
+  - change the config folder settings if necessary
+  - adjust CSS to your own taste
+  - download a font for CAPTCHA to fonts directory
+  - update captcha.php to use it (it uses fonts/ConcertOne-Regular.ttf now)
+  - upload to your server with PHP support
 
 Possible problems:
   - if you cannot post anything, the file access rights are probably preventing PHP to write to the data/* directories
