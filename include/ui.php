@@ -39,10 +39,8 @@ function textarea($name, $default = '') {
 }
 
 function submitSafe($label) {
-  $num1 = rand(0, 10);
-  $num2 = rand(0, 10);
-  $_SESSION['captcha'] = (string)($num1 * $num2);
-  return $num1 . ' x ' . $num2 . ' = ? <input type="text" name="captcha" style="width:50px"> <input type="submit" value="' . $label . '">';
+  global $lang;
+  return '<img src="/captcha.php" alt="captcha"><br>' . $lang['captchaDescription'] . '<input type="text" name="captcha" style="width:100px">&emsp;<input type="submit" value="' . $label . '">';
 }
 
 function submitAdmin($label) {
@@ -85,9 +83,9 @@ function checkBot() {
   global $lang;
   if (!isPOST('captcha'))
     return false;
-  if (isset($_SESSION['captcha']) && cleanMagic($_POST['captcha']) === $_SESSION['captcha'])
+  if (isset($_SESSION['captcha']) && strtolower(cleanMagic($_POST['captcha'])) === $_SESSION['captcha'])
     return true;
-  message($lang['errorBot'] . ' "' . cleanMagic($_POST['captcha']) . '" <> ' . $_SESSION['captcha']);
+  message($lang['errorBot'] . ' "' . cleanMagic($_POST['captcha']) . '"');
   return false;
 }
 
@@ -121,7 +119,7 @@ function paging($page, $pages, $loc) {
   $out = '<div id="page">';
   for ($i = 1; $i <= $pages; $i++)
     $out .= $page === $i ? '<b>' . $i . '</b>' : '<a href="' . $base . $i . $hash . '">' . $i . '</a>';
-  return $out . ($page < $pages ? '<a href="' . $base . ($page + 1) . $hash . '">' . $lang[nextPage] . '</a>' : '') . '</div>';
+  return $out . ($page < $pages ? '<a href="' . $base . ($page + 1) . $hash . '">' . $lang['nextPage'] . '</a>' : '') . '</div>';
 }
 
 function page($pages) {

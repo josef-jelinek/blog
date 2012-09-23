@@ -62,5 +62,6 @@ $lang = array(
   'errorBot' => 'Incorrect answer',
   'commented' => ' commented on ',
   'notFound' => 'The page does not seem to exist...',
+  'captchaDescription' => 'Enter the code above&emsp;',
 );
 ?>
