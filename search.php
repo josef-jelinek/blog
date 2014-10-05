@@ -14,7 +14,7 @@ if (check('text')) {
   $out['content'] .= '<ul>';
   if ($foundPosts) {
     foreach ($foundPosts as $post => $title)
-      $out['content'] .= '<li><a href="/view.php/post/' . $post . '">' . $title . '</a>' . managePost($post) . ' &mdash; ' . toDate($post) . '</li>';
+      $out['content'] .= '<li><a href="./view.php?post=' . $post . '">' . $title . '</a>' . managePost($post) . ' &mdash; ' . toDate($post) . '</li>';
   }
   $out['content'] .= '</ul>';
 } else {

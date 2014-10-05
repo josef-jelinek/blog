@@ -2,7 +2,7 @@
 function urlPath() {
   $out = array();
   if (isset($_SERVER['PATH_INFO'])) {
-    $info = explode('/', $_SERVER['PATH_INFO']);
+    $info = explode('./', $_SERVER['PATH_INFO']);
     $infoNum = count($info);
     for ($i = 1; $i < $infoNum; $i += 2) {
       if ($info[$i] !== '')

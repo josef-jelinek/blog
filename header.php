@@ -13,17 +13,17 @@ if (!isset($_SESSION['role']))
   $_SESSION['role'] = '';
 
 function home() {
-  redirect('/');
+  redirect('.');
 }
 
-$_GET = urlPath();
+// $_GET = urlPath();
 
 $out['baseURL'] = baseURL();
 $out['content'] = '';
 $out['error'] = '';
 
 // Links
-$out['addLink'] .= isAdmin() ? '<a href="/add.php/link" class="add"></a>' : '';
+$out['addLink'] .= isAdmin() ? '<a href="./add.php?link" class="add"></a>' : '';
 $out['linkListItems'] .= '';
 $links = listEntry('links');
 if ($links) {
@@ -34,12 +34,12 @@ if ($links) {
 }
 
 // Tags
-$out['addTag'] .= isAdmin() ? '<a href="/add.php/tag" class="add"></a>' : '';
+$out['addTag'] .= isAdmin() ? '<a href="./add.php?tag" class="add"></a>' : '';
 $out['tagLinks'] .= '';
 $tags = listEntry('tags');
 foreach ($tags as $tag) {
   $tagEntry = readEntry('tags', $tag);
-  $out['tagLinks'] .= ' <a href="/view.php/tag/' . $tag . '">' . $tagEntry['name'] . ' (' . count($tagEntry['posts']) . ')</a>';
+  $out['tagLinks'] .= ' <a href="./view.php?tag=' . $tag . '">' . $tagEntry['name'] . ' (' . count($tagEntry['posts']) . ')</a>';
 }
 
 // Archive
@@ -59,7 +59,7 @@ if ($archives) {
     $out['archiveListItems'] .= '<li>' . $year . '&nbsp;';
     foreach ($months as $month => $count) {
       $yearMonth = $year . '-' . $month;
-      $out['archiveListItems'] .= ' &nbsp;<a href="/view.php/archive/' . $yearMonth . '">' . date('M', strtotime($yearMonth)) . '&nbsp;(' . $count . ')</a>';
+      $out['archiveListItems'] .= ' &nbsp;<a href="./view.php?archive=' . $yearMonth . '">' . date('M', strtotime($yearMonth)) . '&nbsp;(' . $count . ')</a>';
     }
     $out['archiveListItems'] .= '</li>';
   }

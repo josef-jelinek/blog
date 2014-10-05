@@ -8,7 +8,7 @@ if (isGET('login')) {
     home();
   } else {
     $out['title'] = $lang['login'];
-    $out['content'] .= '<form action="/auth.php/login" method="post">
+    $out['content'] .= '<form action="./auth.php?login" method="post">
     <p>' . password('password') . '</p>
     <p>' . submitSafe($lang['confirm']) . '</p>
     </form>';
@@ -18,7 +18,7 @@ if (isGET('login')) {
   home();
 } else if (isGET('test') && isAdmin()) {
   $out['title'] = $lang['login'];
-  $out['content'] .= '<form action="/auth.php/test" method="post">
+  $out['content'] .= '<form action="./auth.php?test" method="post">
   <p>' . password('password') . '</p>
   <p>' . submitAdmin($lang['confirm']) . '</p>
   </form>';
@@ -28,5 +28,5 @@ if (isGET('login')) {
   home();
 }
 
-require 'templates/page.php';
+require './templates/page.php';
 ?>

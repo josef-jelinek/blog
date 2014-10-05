@@ -12,7 +12,11 @@ function cleanMagic($text) {
 }
 
 function isGET($name) {
-  return isset($_GET[$name]) && is_string($_GET[$name]);
+  return isset($_REQUEST[$name]) && is_string($_REQUEST[$name]);
+}
+
+function GET($name) {
+	return filter_input(INPUT_GET, $name);
 }
 
 function isPOST($name) {
@@ -39,8 +43,11 @@ function textarea($name, $default = '') {
 }
 
 function submitSafe($label) {
-  global $lang;
-  return '<img src="/captcha.php" alt="captcha"><br>' . $lang['captchaDescription'] . '<input type="text" name="captcha" style="width:100px">&emsp;<input type="submit" value="' . $label . '">';
+	global $lang;
+	return '<img src="./captcha.php" alt="captcha"><br>' . 
+		$lang['captchaDescription'] . 
+		'<input type="text" name="captcha" style="width:100px">&emsp;' .
+		'<input type="submit" value="' . $label . '">';
 }
 
 function submitAdmin($label) {
@@ -83,30 +90,41 @@ function checkBot() {
   global $lang;
   if (!isPOST('captcha'))
     return false;
-  if (isset($_SESSION['captcha']) && strtolower(cleanMagic($_POST['captcha'])) === $_SESSION['captcha'])
+  if (isset($_SESSION['captcha']) && (cleanMagic($_POST['captcha']) === $_SESSION['captcha']))
     return true;
-  message($lang['errorBot'] . ' "' . cleanMagic($_POST['captcha']) . '"');
+  message($lang['errorBot'] . ' "' . cleanMagic($_POST['captcha']) . '" needed "' . $_SESSION['captcha'] . '"' );
   return false;
 }
 
 function manageDraft($draft) {
-  return isAdmin() ? '<a href="/edit.php/draft/' . $draft . '" class="edit"></a><a href="/publish.php/draft/' . $draft . '" class="publish"></a><a href="/delete.php/draft/' . $draft . '" class="delete"></a>' : '';
+	return isAdmin() ? '<a href="./edit.php?draft=' . $draft . 
+		'" class="edit"></a><a href="./publish.php?draft=' . $draft . 
+		'" class="publish"></a><a href="/delete.php?draft=' . $draft . 
+		'" class="delete"></a>' : '';
 }
 
 function managePost($post) {
-  return isAdmin() ? '<a href="/edit.php/post/' . $post . '" class="edit"></a><a href="/delete.php/post/' . $post . '" class="delete"></a>' : '';
+	return isAdmin() ? '<a href="./edit.php?post=' . $post . 
+		'" class="edit"></a><a href="./delete.php?post=' . $post . 
+		'" class="delete"></a>' : '';
 }
 
 function manageComment($comment) {
-  return isAdmin() || isAuthor($comment) ? '<a href="/edit.php/comment/' . $comment . '" class="edit"></a><a href="/delete.php/comment/' . $comment . '" class="delete"></a>' : '';
+	return isAdmin() || isAuthor($comment) ? '<a href="./edit.php?comment=' . $comment . 
+		'" class="edit"></a><a href="./delete.php?comment=' . $comment . 
+		'" class="delete"></a>' : '';
 }
 
 function manageTag($tag) {
-  return isAdmin() ? '<a href="/edit.php/tag/' . $tag . '" class="edit"></a><a href="/delete.php/tag/' . $tag . '" class="delete"></a>' : '';
+	return isAdmin() ? '<a href="./edit.php?tag=' . $tag . 
+		'" class="edit"></a><a href="./delete.php?tag=' . $tag . 
+		'" class="delete"></a>' : '';
 }
 
 function manageLink($link) {
-  return isAdmin() ? '<a href="/edit.php/link/' . $link . '" class="edit"></a><a href="/delete.php/link/' . $link . '" class="delete"></a>' : '';
+	return isAdmin() ? '<a href="./edit.php?link=' . $link . 
+		'" class="edit"></a><a href="./delete.php?link=' . $link . 
+		'" class="delete"></a>' : '';
 }
 
 function paging($page, $pages, $loc) {
@@ -123,7 +141,7 @@ function paging($page, $pages, $loc) {
 }
 
 function page($pages) {
-  return isGET('pages') && $_GET['pages'] >= 1 && $_GET['pages'] <= $pages ? (int)$_GET['pages'] : 1;
+  return isGET('pages') && GET('pages') >= 1 && GET('pages') <= $pages ? (int)GET('pages') : 1;
 }
 
 function pages($items) {

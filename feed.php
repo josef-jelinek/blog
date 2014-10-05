@@ -31,7 +31,7 @@ if (isGET('comments')) {
       $itemData = readEntry('comments', $item);
       $parentData = readEntry('posts', $itemData['post']);
       $title = clean($itemData['commenter'] . $lang['commented'] . $parentData['title']);
-      $url = $out['baseURL'] . 'view.php/post/' . $itemData['post'] . '/pages/' . pageOf($item, $parentData['comments']) . '#' . $item;
+      $url = $out['baseURL'] . 'view.php?post=' . $itemData['post'] . '/pages/' . pageOf($item, $parentData['comments']) . '#' . $item;
       $out['content'] .= getFeedEntry($title, $url, toDate($item, 'c'), content($itemData['content']));
     }
   }
@@ -45,7 +45,7 @@ if (isGET('comments')) {
     foreach ($items as $item) {
       $itemData = readEntry('posts', $item);
       $title = clean($itemData['title']);
-      $url = $out['baseURL'] . 'view.php/post/' . $item;
+      $url = $out['baseURL'] . 'view.php?post=' . $item;
       $out['content'] .= getFeedEntry($title, $url, toDate($item, 'c'), $itemData['content'], $itemData['tags']);
     }
   }

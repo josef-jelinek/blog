@@ -10,29 +10,33 @@ header('Content-Type: text/html; charset=UTF-8');
   <meta itemprop="name" content="<?php echo $config['title'] . ' - ' . $out['title'];?>">
   <meta itemprop="description" content="<?php echo $config['description'];?>">
   <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400|Anonymous+Pro:400,400italic&amp;subset=latin-ext,latin" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" type="text/css" href="/css/main.css">
-  <link rel="alternate" type="application/atom+xml" href="/feed.php/posts" title="<?php echo $config['title'];?>">
+  <link rel="stylesheet" type="text/css" href="./css/main.css">
+  <link rel="alternate" type="application/atom+xml" href="./feed.php?posts" title="<?php echo $config['title'];?>">
   <script type="text/javascript">
     /* analytics etc. */
   </script> 
 </head>
 <body>
+	<?php $root = baseURL() ?>
   <div id="header"><?php echo $config['title'];?></div>
   <div id="menu">
     <div class="nav">
-      <a href="/"><?php echo $lang['home'];?></a>
-      <a href="/index.php/posts"><?php echo $lang['posts'];?></a>
-      <a href="/index.php/comments"><?php echo $lang['comments'];?></a>
-      <?php if (isAdmin()) echo '<a href="/index.php/drafts">' . $lang['drafts'] . '</a>';?>
-      <?php if (isAdmin()) echo '<a href="/add.php/draft">' . $lang['newDraft'] . '</a>';?>
+		<?php echo '<a href="' . $root . '">' . $lang['home'] . '</a>' .
+			'<a href="' . $root . 'index.php?posts">' . $lang['posts'] . '</a>' . 
+			'<a href="' . $root . 'index.php?comments">' . $lang['comments'] . '</a>';
+		if (isAdmin()) {
+			echo '<a href="' . $root . 'index.php?drafts">' . $lang['drafts'] . '</a>' .
+				 '<a href="' . $root . 'add.php?draft">' . $lang['newDraft'] . '</a>';
+		}
+		?>
     </div>
     <div class="ctl">
-      <a href="/feed.php/posts" class="postfeed"><?php echo $lang['posts'];?></a>
-      <a href="/feed.php/comments" class="commentfeed"><?php echo $lang['comments'];?></a>
+      <a href="feed.php?posts" class="postfeed"><?php echo $lang['posts'];?></a>
+      <a href="feed.php?comments" class="commentfeed"><?php echo $lang['comments'];?></a>
       <?php echo isAdmin()
-        ? '<a href="/auth.php/logout" class="logout">' . $lang['logout'] . '</a>'
-        : '<a href="/auth.php/login" class="login">' . $lang['login'] . '</a>';?>
-      <form action="/search.php" method="post" class="search">
+        ? '<a href="auth.php?logout" class="logout">' . $lang['logout'] . '</a>'
+        : '<a href="auth.php?login" class="login">' . $lang['login'] . '</a>';?>
+      <form action="search.php" method="post" class="search">
         <input type="text" name="text" value="" class="text"><input type="submit" value="" class="submit">
       </form>
     </div>
