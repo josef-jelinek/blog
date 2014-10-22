@@ -8,7 +8,7 @@ input, textarea, select {
   color: #000;
 }
 html {
-  background: #FFF url(/img/code-bg.png) 0 0 repeat-x;
+  background: #FFF url(../img/code-bg.png) 0 0 repeat-x;
 }
 body {
   max-width: 860px;
@@ -30,8 +30,9 @@ input[type="text"], input[type="password"], textarea {
 textarea { width: 98%; }
 input[type="text"] { width: 50%; }
 .block { font-size: 12px; }
-code, pre, .block { line-height: 100%; }
-code, pre, tt, .block { font-family: 'Anonymous Pro', monospace; }
+code, pre, .block { line-height: 120%; }
+code, pre, tt, .block { font-family: 'Courier, Anonymous Pro', monospace; }
+code, pre { padding-left: 30px; }
 .post .img { max-width: 100%; border: 0; display: block; margin: 10px auto; }
 .post iframe { border: 0; display: block; margin: 10px auto; }
 .block {
@@ -74,10 +75,10 @@ code, pre, tt, .block { font-family: 'Anonymous Pro', monospace; }
   font-size: 10px;
   vertical-align: top;
 }
-#menu .ctl .login { padding-left: 16px; width: 0; overflow: hidden; background: url(/img/lock16.png) 0 0 no-repeat; }
-#menu .ctl .logout { background: url(/img/unlock16.png) 0 0 no-repeat; }
-#menu .ctl .postfeed { background: url(/img/feed16.png) 0 0 no-repeat; }
-#menu .ctl .commentfeed { background: url(/img/feed16.png) 0 50% no-repeat; }
+#menu .ctl .login { padding-left: 16px; width: 0; overflow: hidden; background: url(../img/lock16.png) 0 0 no-repeat; }
+#menu .ctl .logout { background: url(../img/unlock16.png) 0 0 no-repeat; }
+#menu .ctl .postfeed { background: url(../img/feed16.png) 0 0 no-repeat; }
+#menu .ctl .commentfeed { background: url(../img/feed16.png) 0 50% no-repeat; }
 #menu .ctl .search { display: inline; } /* inline-block not working in IE7 for form */
 #menu .ctl .search input.text {
   width: 179px; height: 16px;
@@ -91,7 +92,7 @@ code, pre, tt, .block { font-family: 'Anonymous Pro', monospace; }
   width: 16px; height: 16px;
   border: 0; margin: 0 0 0 4px; padding: 0;
   vertical-align: top;
-  background: url(/img/search16.png) 50% 50% no-repeat;
+  background: url(../img/search16.png) 50% 50% no-repeat;
   cursor: pointer;
 }
 #footer { clear: both; font-size: 13px; padding: 10px 0; text-align: right; color: #333; }
@@ -119,14 +120,14 @@ code, pre, tt, .block { font-family: 'Anonymous Pro', monospace; }
   padding-left: 20px;
   line-height: 16px;
   font-size: 13px;
-  background: url(/img/comments16.png) 0 0 no-repeat;
+  background: url(../img/comments16.png) 0 0 no-repeat;
 }
 .info { padding-top: 5px; }
 .tags { margin: 5px 0 10px 8px; }
 .info a, .tags a {
   display: inline-block; min-height: 16px;
   margin: 5px 10px 0 0; padding-left: 20px;
-  background: url(/img/tag16.png) 0 50% no-repeat;
+  background: url(../img/tag16.png) 0 50% no-repeat;
   font-size: 12px;
 }
 .comment:target { background-color: #FFD; }
@@ -150,9 +151,9 @@ a.add, a.edit, a.delete, a.publish {
   width: 16px; height: 16px;
   margin-left: 4px;
   vertical-align: middle;
-  background: url(/img/new16.png) 50% 50% no-repeat;
+  background: url(../img/new16.png) 50% 50% no-repeat;
 }
-a.edit { background: url(/img/edit16.png) 50% 50% no-repeat; }
-a.delete { background: url(/img/delete16.png) 50% 50% no-repeat; }
-a.publish { background: url(/img/publish16.png) 50% 50% no-repeat; }
+a.edit { background: url(../img/edit16.png) 50% 50% no-repeat; }
+a.delete { background: url(../img/delete16.png) 50% 50% no-repeat; }
+a.publish { background: url(../img/publish16.png) 50% 50% no-repeat; }
 .div { text-align: center; color: #DDD; }
